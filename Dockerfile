@@ -1,4 +1,13 @@
-FROM alpine:latest
+FROM python:3.6.15-alpine3.13
+
+COPY requirements.txt .
+
+COPY main.py
+
+RUN python -m pip install -r requirements.txt
+
+ENV FLASK_ENV="development"
+
 EXPOSE 8080
-ENV FLASK_ENV=development
-RUN apk add git python3 py3-pip && git clone https://github.com/introducciondocker/pyecho && cd pyecho && pip install -r requirements.txt && cd /pyecho/ && python3 main.py
+
+CMD["python", "-u", "main.py"]
